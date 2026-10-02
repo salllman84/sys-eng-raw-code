@@ -1,0 +1,156 @@
+================ LINUX COMMANDS ====================
+
+activate wsl: open powershell is an admin and then run 'wsl -d Ubuntu'.
+home in Ubuntu: cd ~ (shortcut) or cd /home/username/
+where i'm: run 'pdw' to find your location.
+what's here: run 'ls' or 'ls -la' (detailed).
+switch b/w current & prev direcotry: 'cd -'.
+go back in directory: 'cd ..'
+create a folder: 'mkdir folder-name'
+create tree folder structure: 'mkdir -p folder/sub1/sub-a/sub-a-sub'
+create empty file; 'touch filename.extention' eg. (touch hello.cpp). (to create 'touch', to delete 'rm')
+delete a file: rm filename.extention' eg. (rm hello.cpp)
+delete a folder; 'rmdir folder/sub1/sub-a/sub-a-sub' (to create: mkdir, to delete: rmdir)
+delete folder and content: 'rm -r foldername/' (it deletes all folder files).
+rename a file: 'mv old.txt new.txt'
+move file; 'mv old.txt another.txt' (moving and renaming commands are same in the linux).
+move file: 'mv this-file.txt newfolder/'
+copy file: 'cp this.txt to.txt' (actually copying the content of this.txt into to.txt).
+copy to folder; 'cp this.txt folder-name/folder/fold2/'
+
+ ========= COMPILE || RUN  || DEBUG ||  CREATE ================
+
+	create file: 'touch file.cpp'
+	open file: 'nano file.cpp'(then write code)
+	|__ save file: Ctrl+0
+			     |__ press enter
+					   |Ctrl+x.
+	compilation: g++ -std=c++20 -Wall -Wextra -Wpedantic -g filename.cpp -o newname.cpp
+	run: ./newname.cpp
+	debug: g++ -std=c++20 -Wall -Wextra -Wpedantic -g -O0 filename.cpp -o newname.cpp
+											|__gdb newname.cpp
+													  |__gdb 'break main'
+													  |__gdb 'run'
+													  |__gdb 'next'(run next again to show next line).
+													  |__gdb 'print var_name'
+													  |__gdb 'continue'
+													  |__gdb 'quit' (stop debuging).
+
+======= GitHub Commands =========
+	1. local computer	
+   Your Ubuntu computer
+        |
+        | git push
+        ↓
+      GitHub
+	2. online GitHub repo
+   GitHub
+        |
+        | git clone / git pull
+        ↓
+   Your Ubuntu computer
+
+	=========== LOCAL ==========
+	1. CREATE LOCAL REPO
+	* 'mkdir new-local-repo
+	* 'cd new-local-repo' bring to the directory and create required files like 'code your project'
+	* 'git init' Initialize the repo
+	* 'git bran -M main' set default branch.
+	* 'git add filename' or 'git add .' (the dot adds all files it once)
+	* 'git commit -m "initial commit"
+	
+
+	===== if you want to push your local code into github ======
+	2. create an empty repo at github.
+	* new-local-repo (on your github copy the repo url)
+	* back to local machine and run
+	* git remote add origin https://github.com/salllman84/new-local-repo.git
+	* git remote -v : it helps to show you the url of the repo where you are connected.
+	* git push -u origin main ( '-u' create relationship between local main and github main branch)
+	* after this all new changes pushing becomes very easy just run this
+		* git status (to know what to push
+		* git add .
+		* git push
+		* git commit -m " commit here"
+
+ 2. from github to local machine
+    let supose we have this github repo	https://github.com/salllman84/new-local-repo.git
+	* Go to the directory where you want to clone. (cd ~/systems-engineering)
+	* git clone https://github.com/salllman84/new-local-repo.git
+	* move to that new folder cloned through 'git remote'
+	* .......~/systems-engineering/ cd new-loca-repo
+	* now repo will look like this: ~/systems-engineering/new-local-repo
+	* run this : ls -la to know which files it has.
+
+ ======== diff b/w 'git clone' and 'git pull' =======
+	1. git clone: when we don't have that repo locally we use 'git clone url.....' git clone we run usually only once in a directory.
+	2. git pull: we use it when we want to pull the recent changes to the online repo to our local repo. 'git pull' usually done repeatedly to bring new changes).
+	
+========= What does a branch actually mean? ======================
+		"branch means you are working on a project with different features or one feature, but you are writing whole code in only one branch eg. master or main
+		'it is like putting everything into a single room everytime at once without involving another store room'
+		then you decide that the work/feature which is complete will only allowed to put into that main room, and all those work which is in pending will stay
+		in the store room, when complete then shipt it to the main room.
+
+		Technically, you are working on a project with multiple features, you creates separate room for each feature until it's complete and then put that
+		feature into the main/master branch.
+
+		============ Why we do this ===========
+		'to keep the work safe and every feature clean.'
+		
+		=========== Example ===========
+		main
+ 		|
+	        |--- commit A
+ 		|
+ 		|--- commit B
+ 		|
+	        |--- commit C  'here we put all work into the main room'
+
+		main
+ 		 |
+		 A
+		 |
+		 B
+		 |
+		 C 'A,B, and C features are complete so it stay in main room
+		 └──── feature-cache 'while new feature (feature-cache) is under construction, so we kept it alone.
+
+	================ How to create a new branch ======================
+		* git switch branch-name-here (it only create new branch and stays on the previous branch)
+		* git switch -c brachname (it does two things creates new branch and also moved to that new branch)
+	================ see all braches ==========================
+		* git branch : master, main, *login (star means you are it login branch)
+	=============== move to another branch ====================
+		* git switch main
+	============== delete a branch =======================
+		* git branch -d main: before deleting you must run 'git branch' to ensure that ur tree is clean and all work pushed 'git push -u origin login-page' to the
+				      branch which you wanna delete. before deleting you must to merge 'login-page' branch with default branch by switching into
+				      'git switch main' default branch and than running merge command 'git merge login-page'.
+		example: git branch : master, main, *login (so we are in the login branch) then i run 'git push -u origin login' (all work pushed and the tree is clean)
+				      then i switched to the default branch 'git branch main' and merge 'git merge login-page' login-page branch. then run 
+				      'git switch -d login-page'. (we switched to another branch b/c we can't delete the current branch.) and then push the local changes
+				     into the remote github repo 'git push origin main'.
+		if before deleting the login-page branch locally you pushed the changes after merging the 'login-page' branch will also pushed to the remote repo
+		which you can delete by running 'git push origin --delete login-page'. now we delete the 'login-page' from both local/remote repos.
+
+	============== Set default branch for a repo ===========
+		* git config --global init.defaultBranch branch-name
+	============== which branch is default =====================
+		* git config --global init.defaultBranch
+	============== set new repo default branch ==================
+		* git branch -M branch-name
+	============= View commits ======================
+		* git log
+		* git log --online
+
+
+
+
+
+
+
+
+
+
+		
